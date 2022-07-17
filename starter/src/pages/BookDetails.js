@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { get } from "../utils/BooksAPI";
 const BookDetails = () => {
   let { id } = useParams();
@@ -25,6 +25,9 @@ const BookDetails = () => {
           />
         </div>
         <div>
+          <Link to={`/`}>
+            <span className="close-search">Close</span>
+          </Link>
           <h1>{Data?.title}</h1>
           <p>{Data?.description}</p>
         </div>

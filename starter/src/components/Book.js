@@ -24,9 +24,9 @@ const Book = ({ bookId, setRevaildate }) => {
 
   return (
     Data && (
-      <Link to={`/Book/${Data.id}`}>
-        <div className="book">
-          <div className="book-top">
+      <div className="book">
+        <div className="book-top">
+          <Link to={`/Book/${Data.id}`}>
             <div
               className="book-cover"
               style={{
@@ -35,25 +35,27 @@ const Book = ({ bookId, setRevaildate }) => {
                 backgroundImage: `url('https://picsum.photos/200/300?random=${Data.id}')`,
               }}
             ></div>
-            <div className="book-shelf-changer">
-              <select
-                value={Data.shelf}
-                onChange={(e) => {
-                  updateShelf(Data, e.target.value);
-                }}
-              >
-                <option value="currentlyReading">Currently Reading</option>
-                <option value="wantToRead">Want to Read</option>
-                <option value="read">Read</option>
-              </select>
-            </div>
+          </Link>
+          <div className="book-shelf-changer">
+            <select
+              value={Data.shelf}
+              onChange={(e) => {
+                updateShelf(Data, e.target.value);
+              }}
+            >
+              <option value="currentlyReading">Currently Reading</option>
+              <option value="wantToRead">Want to Read</option>
+              <option value="read">Read</option>
+            </select>
           </div>
+        </div>
+        <Link to={`/Book/${Data.id}`}>
           <div className="book-title">{Data.title}</div>
           <div className="book-authors">
             {Data.authors?.toString().split("")}
           </div>
-        </div>
-      </Link>
+        </Link>
+      </div>
     )
   );
 };
