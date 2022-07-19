@@ -6,16 +6,17 @@ import { getAll } from "../utils/BooksAPI";
 
 const Home = () => {
   const { state } = useShelf();
-  let shelfs = state && Object.keys(state);
-  const [Books, setBooks] = useState([]);
-  useEffect(() => {
-    const fetchBooks = async () => {
-      let data = await getAll();
-      setBooks(data);
-    };
-    fetchBooks();
-  }, [state]);
-  // let shelfs = Books && [...new Set(Books.map((x, i) => x.shelf))];
+  // let shelfs = state && Object.keys(state);
+  // const [Books, setBooks] = useState([]);
+  let Books = state;
+  // useEffect(() => {
+  //   const fetchBooks = async () => {
+  //     let data = await getAll();
+  //     setBooks(data);
+  //   };
+  //   fetchBooks();
+  // }, [state]);
+  let shelfs = Books && [...new Set(Books.map((x, i) => x.shelf))];
   let shelfdata = (self) => {
     let data = Books.filter((val, i) => val?.shelf === self);
     return data && <BookList Books={data} />;
