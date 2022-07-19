@@ -4,7 +4,7 @@ import { get, update } from "../utils/BooksAPI";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const Book = ({ bookId, setRevaildate }) => {
+const Book = ({ bookId }) => {
   const [Data, setData] = useState(null);
   const { stateShelfUpdate } = useShelf();
   useEffect(() => {
@@ -19,7 +19,6 @@ const Book = ({ bookId, setRevaildate }) => {
   const updateShelf = async (book, shelf) => {
     let data = await update(book, shelf);
     stateShelfUpdate(data);
-    setRevaildate && setRevaildate(Math.floor(Math.random() * 999));
   };
 
   return (

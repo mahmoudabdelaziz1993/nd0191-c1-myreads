@@ -2,19 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BookList from "../components/BookList";
 import SearchInput from "../components/SearchInput";
-import { getAll, search } from "./../utils/BooksAPI";
+import { search } from "../utils/BooksAPI";
 
 const BookAdd = () => {
   const [Query, setQuery] = useState("");
   const [Books, setBooks] = useState([]);
-  const [Revaildate, setRevaildate] = useState("");
-  useEffect(() => {
-    const fetchBooks = async () => {
-      let data = await getAll();
-      setBooks(data);
-    };
 
+  useEffect(() => {
     const fetBooksQuery = async (query) => {
+      console.log("query", query);
       let data = await search(query, 10);
       setBooks(data);
     };
@@ -22,9 +18,9 @@ const BookAdd = () => {
     if (Query.length > 0) {
       fetBooksQuery(Query);
     } else {
-      fetchBooks();
+      setBooks([]);
     }
-  }, [Query, Revaildate]);
+  }, [Query]);
 
   return (
     <div className="search-books">
@@ -35,10 +31,7 @@ const BookAdd = () => {
         <SearchInput Query={Query} setQuery={setQuery} />
       </div>
       <div className="search-books-results">
-        <BookList
-          Books={Books.map((k, i) => k.id)}
-          setRevaildate={setRevaildate}
-        />
+        {Query.length > 0 && Books && <BookList Books={Books} />}
       </div>
     </div>
   );
