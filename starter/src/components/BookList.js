@@ -7,8 +7,8 @@ const BookList = ({ Books, setRevaildate }) => {
     <ol className="books-grid">
       {Books?.length > 0 &&
         Books.map((book, index) => (
-          <li key={book}>
-            <Book bookId={book} setRevaildate={setRevaildate} />
+          <li key={book.id}>
+            <Book bookId={book.id} setRevaildate={setRevaildate} />
           </li>
         ))}
     </ol>
