@@ -10,7 +10,6 @@ const BookAdd = () => {
 
   useEffect(() => {
     const fetBooksQuery = async (query) => {
-      console.log("query", query);
       let data = await search(query, 10);
       setBooks(data);
     };

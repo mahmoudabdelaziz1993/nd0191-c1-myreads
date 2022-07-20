@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useShelf } from "../context/ShelfContext";
-import { get, update } from "../utils/BooksAPI";
+import { get } from "../utils/BooksAPI";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const Book = ({ bookId }) => {
   const [Data, setData] = useState(null);
-  const { stateShelfUpdate } = useShelf();
+  const { stateShelfUpdate, state } = useShelf();
+  let Books = state;
+  let shelfs = Books && [...new Set(Books.map((x, i) => x.shelf))];
   useEffect(() => {
     const fetchBook = async (bookId) => {
       let data = await get(bookId);
       setData(data);
     };
     fetchBook(bookId);
+    return () => {
+      setData(null);
+    };
   }, [bookId]);
 
   // Detrmine which shelf
-  const updateShelf = async (book, shelf) => {
-    let data = await update(book, shelf);
-    stateShelfUpdate(data);
-  };
+  // const updateShelf = async (book, shelf) => {
+  //   let data = await update(book, shelf);
+  //   stateShelfUpdate(data);
+  // };
 
   return (
     Data && (
@@ -39,12 +44,18 @@ const Book = ({ bookId }) => {
             <select
               value={Data.shelf}
               onChange={(e) => {
-                updateShelf(Data, e.target.value);
+                stateShelfUpdate(Data, e.target.value);
               }}
             >
-              <option value="currentlyReading">Currently Reading</option>
+              {shelfs &&
+                shelfs?.map((item, i) => (
+                  <option value={item} key={i}>
+                    {item}
+                  </option>
+                ))}
+              {/* <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
-              <option value="read">Read</option>
+              <option value="read">Read</option> */}
             </select>
           </div>
         </div>

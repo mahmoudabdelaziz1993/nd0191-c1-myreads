@@ -1,27 +1,32 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getAll } from "../utils/BooksAPI";
+import { getAll, update } from "../utils/BooksAPI";
 
 //Create Context
 export const ShelfContext = createContext(null);
 // DIY Provider
 export const ShelfProvider = ({ children }) => {
-  const IntState = JSON.parse(localStorage.getItem("myReadsStorage")) || [];
-  const [state, setState] = useState(IntState);
-  const [Vtoken, setVtoken] = useState(null);
+  const [state, setState] = useState([]);
   const api = {
-    stateShelfUpdate: async () => {
-      setVtoken(Math.floor(Math.random() * 99999));
+    stateShelfUpdate: async (book, shelf) => {
+      let res = await update(book, shelf);
+      if (res) {
+        let data = await getAll();
+        setState(data);
+      }
     },
   };
 
   useEffect(() => {
-    let fetchBooks = async () => {
+    const fetchBooks = async () => {
       let data = await getAll();
       setState(data);
     };
     fetchBooks();
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem("myReadsStorage", JSON.stringify(state));
-  }, [Vtoken]);
+  }, [state]);
 
   return (
     <ShelfContext.Provider value={{ state, ...api }}>

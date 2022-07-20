@@ -1,21 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useShelf } from "./../context/ShelfContext";
 import BookList from "../components/BookList";
-import { getAll } from "../utils/BooksAPI";
 
 const Home = () => {
   const { state } = useShelf();
-  // let shelfs = state && Object.keys(state);
-  // const [Books, setBooks] = useState([]);
+
   let Books = state;
-  // useEffect(() => {
-  //   const fetchBooks = async () => {
-  //     let data = await getAll();
-  //     setBooks(data);
-  //   };
-  //   fetchBooks();
-  // }, [state]);
   let shelfs = Books && [...new Set(Books.map((x, i) => x.shelf))];
   let shelfdata = (self) => {
     let data = Books.filter((val, i) => val?.shelf === self);
@@ -29,12 +20,13 @@ const Home = () => {
       </div>
       <div className="list-books-content">
         <div>
-          {shelfs?.map((item, i) => (
-            <div className="bookshelf" key={Math.random() * i}>
-              <h2 className="bookshelf-title">{item}</h2>
-              <div className="bookshelf-books">{shelfdata(item)}</div>
-            </div>
-          ))}
+          {shelfs &&
+            shelfs?.map((item, i) => (
+              <div className="bookshelf" key={Math.random() * i}>
+                <h2 className="bookshelf-title">{item}</h2>
+                <div className="bookshelf-books">{shelfdata(item)}</div>
+              </div>
+            ))}
         </div>
       </div>
       <div className="open-search">
