@@ -17,13 +17,7 @@ const Home = () => {
       <div className="list-books-content">
         <div>
           {shelfs &&
-            shelfs?.map((item, i) => (
-              <BookShelf title={item} key={item} />
-              // <div className="bookshelf" key={Math.random() * i}>
-              //   <h2 className="bookshelf-title">{item}</h2>
-              //   <div className="bookshelf-books">{shelfdata(item)}</div>
-              // </div>
-            ))}
+            shelfs?.map((item, i) => <BookShelf title={item} key={item} />)}
         </div>
       </div>
       <div className="open-search">
