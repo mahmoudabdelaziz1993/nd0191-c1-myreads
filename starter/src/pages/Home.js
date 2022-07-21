@@ -1,17 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useShelf } from "./../context/ShelfContext";
-import BookList from "../components/BookList";
+import BookShelf from "../components/BookShelf";
 
 const Home = () => {
   const { state } = useShelf();
 
   let Books = state;
   let shelfs = Books && [...new Set(Books.map((x, i) => x.shelf))];
-  let shelfdata = (self) => {
-    let data = Books.filter((val, i) => val?.shelf === self);
-    return data && <BookList Books={data} />;
-  };
 
   return (
     <div className="list-books">
@@ -22,10 +18,11 @@ const Home = () => {
         <div>
           {shelfs &&
             shelfs?.map((item, i) => (
-              <div className="bookshelf" key={Math.random() * i}>
-                <h2 className="bookshelf-title">{item}</h2>
-                <div className="bookshelf-books">{shelfdata(item)}</div>
-              </div>
+              <BookShelf title={item} key={item} />
+              // <div className="bookshelf" key={Math.random() * i}>
+              //   <h2 className="bookshelf-title">{item}</h2>
+              //   <div className="bookshelf-books">{shelfdata(item)}</div>
+              // </div>
             ))}
         </div>
       </div>
