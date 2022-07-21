@@ -15,7 +15,9 @@ const BookAdd = () => {
     };
 
     if (Query.length > 0) {
-      fetBooksQuery(Query);
+      setTimeout(() => {
+        fetBooksQuery(Query);
+      }, 3000);
     } else {
       setBooks([]);
     }
@@ -30,7 +32,7 @@ const BookAdd = () => {
         <SearchInput Query={Query} setQuery={setQuery} />
       </div>
       <div className="search-books-results">
-        {Query.length > 0 && Books && <BookList Books={Books} />}
+        {Query?.length > 0 && Books && <BookList Books={Books} />}
       </div>
     </div>
   );
