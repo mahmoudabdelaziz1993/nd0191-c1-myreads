@@ -47,6 +47,7 @@ const Book = ({ bookId }) => {
                 stateShelfUpdate(Data, e.target.value);
               }}
             >
+              <option value={"none"}>None</option>
               {shelfs &&
                 shelfs?.map((item, i) => (
                   <option value={item} key={i}>
